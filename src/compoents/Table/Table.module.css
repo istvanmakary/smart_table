@@ -1,6 +1,7 @@
 .container {
     overflow-x: auto;
     width: 100vw;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 };
 .table {
     border-collapse: collapse;
