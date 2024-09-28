@@ -2,10 +2,9 @@ import { Data, Filter } from '../types';
 import { useStorage } from '../hooks/useStorage';
 import { useCallback, useEffect, useMemo } from 'react';
 import Table from '../compoents/Table/Table';
-import { Box, TablePagination } from '@mui/material';
-import ColumnFilter from '../compoents/ColumnFilter';
-import Filtering from '../compoents/Filter/Filtering';
+import { TablePagination } from '@mui/material';
 import { filterByCondition } from '../utils';
+import FilterBar from '../compoents/Filter/FilterBar';
 
 const TableWithFilter = ({ data: initialData }: { data: Data }) => {
   const [page, setPage] = useStorage('page', 0);
@@ -55,6 +54,12 @@ const TableWithFilter = ({ data: initialData }: { data: Data }) => {
     return [...data].splice(page * perPage, perPage);
   }, [page, perPage, data]);
 
+  useEffect(() => {
+    if (!renderData.length && page > 0) {
+      setPage(0);
+    }
+  }, [renderData, page, setPage]);
+
   const handleActiveColumnsChange = useCallback(
     (currentActiveColumns: string[]) => {
       setBlacklistedColumns(
@@ -68,23 +73,18 @@ const TableWithFilter = ({ data: initialData }: { data: Data }) => {
     (value?: Filter) => {
       setFilter(value ? JSON.stringify(value) : '');
     },
-    [setFilter]
+    [setFilter, setPage]
   );
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <ColumnFilter
-          columns={allColumns}
-          activeColumns={activeColumns}
-          onActiveColumnsChange={handleActiveColumnsChange}
-        />
-        <Filtering
-          filter={filter}
-          columns={activeColumns}
-          onSubmit={handleFilterChange}
-        />
-      </Box>
+      <FilterBar
+        columns={allColumns}
+        activeColumns={activeColumns}
+        onFilterSubmit={handleFilterChange}
+        filter={filter}
+        onActiveColumnsChange={handleActiveColumnsChange}
+      />
       <Table columns={activeColumns} data={renderData} />
       <TablePagination
         component="div"

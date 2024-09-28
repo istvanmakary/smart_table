@@ -23,5 +23,5 @@ export type Filter =
   | FilterValue
   | {
       operator: OPERATORS;
-      conditions: Filter[];
+      conditions: FilterValue[];
     };

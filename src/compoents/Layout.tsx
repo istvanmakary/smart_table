@@ -5,7 +5,9 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <AppBar sx={{ backgroundColor: '#009879' }} position="fixed">
-        <Toolbar>
+        <Toolbar
+          sx={{ fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif' }}
+        >
           <h1>Take home problem</h1>
         </Toolbar>
       </AppBar>

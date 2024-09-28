@@ -24,7 +24,7 @@ const evaluateCondition = (
   }
 };
 
-const evaluateRecursiveCondition = (
+const evaluateConditions = (
   item: Data[number],
   recursiveCondition: Filter
 ): boolean => {
@@ -32,9 +32,9 @@ const evaluateRecursiveCondition = (
     const { operator, conditions } = recursiveCondition;
 
     if (operator === 'AND') {
-      return conditions.every((cond) => evaluateRecursiveCondition(item, cond));
+      return conditions.every((cond) => evaluateCondition(item, cond));
     } else if (operator === 'OR') {
-      return conditions.some((cond) => evaluateRecursiveCondition(item, cond));
+      return conditions.some((cond) => evaluateCondition(item, cond));
     }
   } else {
     return evaluateCondition(item, recursiveCondition);
@@ -46,7 +46,5 @@ export const filterByCondition = (
   data: Data,
   recursiveCondition: Filter
 ): Data => {
-  return data.filter((item) =>
-    evaluateRecursiveCondition(item, recursiveCondition)
-  );
+  return data.filter((item) => evaluateConditions(item, recursiveCondition));
 };

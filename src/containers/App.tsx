@@ -1,5 +1,5 @@
 import { useAsync } from 'react-use';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, ThemeProvider, createTheme } from '@mui/material';
 import { Data } from '../types';
 import TableWithFilter from './TableWithFilter';
 
@@ -16,7 +16,17 @@ const App = () => {
     return <CircularProgress />;
   }
 
-  return value ? <TableWithFilter data={value} /> : null;
+  return value ? (
+    <ThemeProvider
+      theme={createTheme({
+        palette: {
+          primary: { main: '#009879' },
+        },
+      })}
+    >
+      <TableWithFilter data={value} />
+    </ThemeProvider>
+  ) : null;
 };
 
 export default App;

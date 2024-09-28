@@ -1,0 +1,14 @@
+
+.buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actionButton {
+    font-size: 12px;
+}
+
+.container {
+    padding: 15px;
+    max-width: 300px;
+}
